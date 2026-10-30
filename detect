@@ -1,0 +1,17 @@
+#!/bin/bash
+
+outdir="out-$EPOCHSECONDS"
+echo "will output results to: ${outdir}"
+
+# create crops matching "spotted lanternfly" into runs/out/lanternfly/crops directory.
+# we're using a low confidence threshold to detect more objects to pass to bioclip
+yolo predict model=yoloe-26x-seg.pt conf=0.05 classes="spotted lanternfly" source=inputs save_crop=True project=${outdir} name=lanternfly exist_ok=True
+
+# refine yolo crops using bioclip
+bioclip predict runs/segment/${outdir}/lanternfly/crops/*/*.jpg | tee bioclip-results.csv
+
+# show high confidence results
+duckdb -c "
+create table results as select regexp_replace(file_name, '-\d+.jpg$', '.jpg') as source_image, * from 'bioclip-results.csv';
+select source_image, count(*) as num_detections from results where score > 0.90 group by source_image order by num_detections;
+"
