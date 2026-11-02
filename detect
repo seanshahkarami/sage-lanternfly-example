@@ -4,14 +4,14 @@ set -euo pipefail
 
 # We keep each run self contained in a runs/epochtime directory.
 inputs="$PWD/inputs"
-outputs="$PWD/runs/$(date -u +%s)"
+outputs="$PWD/outputs/$(date -u +%s)"
 mkdir -p "${outputs}"
 
 # 1. Create candidate crops using YOLO.
 yolo predict model=yoloe-26x-seg.pt conf=0.05 classes="spotted lanternfly" "source=${inputs}" "project=${outputs}" name=yolo save_crop=True exist_ok=True
 
 # 2. Refine YOLO crops using BioCLIP.
-bioclip predict -k 1 runs/segment/out/yolo/crops/*/*.jpg > bioclip-results.csv
+bioclip predict -k 1 outputs/segment/out/yolo/crops/*/*.jpg > bioclip-results.csv
 
 # 3. Show high confidence results.
 duckdb -c "
