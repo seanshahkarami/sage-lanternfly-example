@@ -4,7 +4,7 @@ This repo shows a minimal example of combining YOLO and BioCLIP to attempt to de
 
 ## Setup
 
-You'll need to setup a virtual environment and installed the dependencies one time before running the app.
+You'll need to setup a virtual environment and install the dependencies one time before running the app.
 
 ```sh
 python3 -m venv .venv
