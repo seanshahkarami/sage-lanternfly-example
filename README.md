@@ -38,6 +38,6 @@ _Note that during the first run, the required models will be fetched so it may t
 
 Each run will produce a `runs/epochtime` directory with the following artifacts:
 
-`yolo/*.jpg`: Each input image annotated with YOLO detection bounding boxes and scores.
-`yolo/crops/*/*.jpg`: The crops produced from the YOLO detections.
-`bioclip-results.csv`: A CSV containing the top BioCLIP predictions for each of the crops.
+* `yolo/*.jpg`: Each input image annotated with YOLO detection bounding boxes and scores.
+* `yolo/crops/*/*.jpg`: The crops produced from the YOLO detections.
+* `bioclip-results.csv`: A CSV containing the top BioCLIP predictions for each of the crops.
