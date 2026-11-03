@@ -1,6 +1,6 @@
 # Sage Spotted Lanternfly Detector Example
 
-This repo shows a minimal example of combining YOLO and BioCLIP to attempt to detect spotted laternflies.
+This repo shows a minimal example of combining YOLO and BioCLIP to attempt to detect spotted lanternflies.
 
 ## Setup
 
@@ -17,6 +17,8 @@ Now, you simply need to activate the virtual environment before running the app.
 ```sh
 source .venv/bin/activate
 ```
+
+_I'm also using [duckdb](https://duckdb.org) to show the CSV results. That is currently installed on the Sage nodes out of the box but you may need to install it for local testing._
 
 ## Running
 
