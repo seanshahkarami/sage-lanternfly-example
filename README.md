@@ -30,13 +30,13 @@ Now, run the app using:
 ./detect
 ```
 
-This will create a `runs/epochtime` directory with the processed images and results CSV in it.
+This will create a `runs/timestamp/` directory with the processed images and results CSV in it.
 
 _Note that during the first run, the required models will be fetched so it may take a bit longer than subsequent runs._
 
 ## Results
 
-Each run will produce a `runs/epochtime` directory with the following artifacts:
+Each run will produce a `runs/timestamp/` directory with the following artifacts:
 
 * `yolo/*.jpg`: Each input image annotated with YOLO detection bounding boxes and scores.
 * `yolo/crops/*/*.jpg`: The crops produced from the YOLO detections.
