@@ -8,13 +8,21 @@ outputs="$PWD/runs/$(date -u +%s)"
 mkdir -p "${outputs}"
 
 # 1. Create candidate crops using YOLO.
-yolo predict model=yoloe-26x-seg.pt conf=0.05 classes="spotted lanternfly" source=${inputs} project=${outputs} name=yolo save_crop=True exist_ok=True
+yolo predict model=yoloe-26x-seg.pt conf=0.05 imgsz=1280 agnostic_nms=True iou=0.5 classes="insect, bug, black insect with white spots, red and black insect, spotted lanternfly" source=${inputs} project=${outputs} name=yolo save_crop=True exist_ok=True
 
 # 2. Refine YOLO crops using BioCLIP.
 bioclip predict ${outputs}/yolo/crops/*/*.jpg > ${outputs}/bioclip-results.csv
 
 # 3. Show high confidence results.
 duckdb -c "
-create table results as select regexp_replace(file_name, '-\d+.jpg$', '.jpg') as source_image, * from '${outputs}/bioclip-results.csv';
-select source_image, count(*) as num_detections from results where score > 0.90 group by source_image order by num_detections;
+create table results as
+select
+    regexp_replace(file_name, '-\d+.jpg$', '.jpg') as source_image,
+    *
+from '${outputs}/bioclip-results.csv';
+
+select source_image, count(*) as num_detections from results
+where score > 0.7 and species = 'Lycorma delicatula'
+group by source_image
+order by num_detections;
 "
