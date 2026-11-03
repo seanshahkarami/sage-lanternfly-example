@@ -1,6 +1,6 @@
 # Sage Spotted Lanternfly Detector Example
 
-This repo shows a minimal example of combining YOLO and Bioclip to attempt to detect spotted laternflies.
+This repo shows a minimal example of combining YOLO and BioCLIP to attempt to detect spotted laternflies.
 
 ## Setup
 
@@ -30,4 +30,14 @@ Now, run the app using:
 ./detect
 ```
 
-This will create a `runs/epochtime` directory with the processed images and results CSV in it. Note that during the first run, the required models will be fetched so it may take a bit longer than subsequent runs.
+This will create a `runs/epochtime` directory with the processed images and results CSV in it.
+
+_Note that during the first run, the required models will be fetched so it may take a bit longer than subsequent runs._
+
+## Results
+
+Each run will produce a `runs/epochtime` directory with the following artifacts:
+
+`yolo/*.jpg`: Each input image annotated with YOLO detection bounding boxes and scores.
+`yolo/crops/*/*.jpg`: The crops produced from the YOLO detections.
+`bioclip-results.csv`: A CSV containing the top BioCLIP predictions for each of the crops.
