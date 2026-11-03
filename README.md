@@ -30,4 +30,4 @@ Now, run the app using:
 ./detect
 ```
 
-This will create a `runs/epochtime` directory with the processed images and results CSV in it.
+This will create a `runs/epochtime` directory with the processed images and results CSV in it. Note that during the first run, the required models will be fetched so it may take a bit longer than subsequent runs.
