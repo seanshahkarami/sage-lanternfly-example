@@ -2,6 +2,8 @@
 
 This repo shows a minimal example of combining YOLO and BioCLIP to attempt to detect spotted lanternflies.
 
+The main content of the example is in the [detect](./detect) script and a similar but not quite identical Python version is in [detect.py](./detect.py).
+
 ## Setup
 
 You'll need to setup a virtual environment and install the dependencies one time before running the app.
