@@ -58,9 +58,10 @@ def classify_crops(crops_dirs: Path, classify_dirs: Path):
 
 if __name__ == "__main__":
     now = datetime.now(timezone.utc)
-    
-    crops_dirs = Path(f"runs/{now.isoformat()}/crops")
-    classify_dirs = Path(f"runs/{now.isoformat()}/classify")
+    run_dir = Path("runs", now.isoformat())
+    crops_dir = Path(run_dir, "crops")
+    classify_dir = Path(run_dir, "classify")
 
-    create_crops(crops_dirs)
-    classify_crops(crops_dirs, classify_dirs)
+    # Run detection pipeline.
+    create_crops(crops_dir)
+    classify_crops(crops_dir, classify_dir)
