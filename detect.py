@@ -45,7 +45,11 @@ def classify_crops(crops_dirs: Path, classify_dirs: Path):
     predictions = classifier.predict(crops, Rank.SPECIES, k=1)
     for prediction in predictions:
         print(prediction)
-        
+
+        # Skip predictions with low confidence scores.
+        if prediction["score"] < 0.8:
+            continue
+
         # Link an entry in the species directory to the cropped image.
         link_path = Path(classify_dirs, prediction["species"], prediction["file_name"].name)
         link_path.parent.mkdir(parents=True, exist_ok=True)
