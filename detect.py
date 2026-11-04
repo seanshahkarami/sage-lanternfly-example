@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 from pathlib import Path
 from datetime import datetime, timezone
-from shutil import copyfile
 import torch
 
 
-# autodetect which device to use (CUDA, MPS, or CPU)
+# Autodetect which device to use (CUDA, MPS, or CPU).
 device = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
 
 
@@ -46,7 +45,7 @@ def classify_crops(crops_dir: Path, classify_dir: Path):
     for prediction in predictions:
         print(prediction)
 
-        # Skip predictions with low confidence scores.
+        # Bin predictions as yes or no based on confidence scores.
         accept_prediction = "yes" if prediction["score"] >= 0.8 else "no"
 
         # Link an entry in the species directory to the cropped image.
