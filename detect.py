@@ -9,7 +9,7 @@ import torch
 device = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
 
 
-def create_crops(crops_dirs: Path):
+def create_crops(crops_dir: Path):
     from ultralytics import YOLOE
     from ultralytics.utils.plotting import save_one_box
 
@@ -28,20 +28,20 @@ def create_crops(crops_dirs: Path):
             save_one_box(
                 box.xyxy,                       # box in original-image pixels
                 r.orig_img,                     # original image (BGR numpy array)
-                file=crops_dirs / f"{stem}_{i:03d}.jpg",
+                file=crops_dir / f"{stem}_{i:03d}.jpg",
                 gain=1.5,                       # grow the box 1.5x (~25% each side)
                 pad=0,                          # extra fixed pixels on top of gain
                 BGR=True,                       # orig_img is BGR, as Ultralytics uses it internally
             )
 
 
-def classify_crops(crops_dirs: Path, classify_dirs: Path):
+def classify_crops(crops_dir: Path, classify_dir: Path):
     from bioclip import Rank
     from bioclip.predict import TreeOfLifeClassifier
 
     classifier = TreeOfLifeClassifier(device=device)
 
-    crops = sorted(crops_dirs.glob("*.jpg"))
+    crops = sorted(crops_dir.glob("*.jpg"))
     predictions = classifier.predict(crops, Rank.SPECIES, k=1)
     for prediction in predictions:
         print(prediction)
@@ -51,7 +51,7 @@ def classify_crops(crops_dirs: Path, classify_dirs: Path):
             continue
 
         # Link an entry in the species directory to the cropped image.
-        link_path = Path(classify_dirs, prediction["species"], prediction["file_name"].name)
+        link_path = Path(classify_dir, prediction["species"], prediction["file_name"].name)
         link_path.parent.mkdir(parents=True, exist_ok=True)
         link_path.hardlink_to(prediction["file_name"])
 
