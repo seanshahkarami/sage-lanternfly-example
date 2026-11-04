@@ -47,9 +47,9 @@ def classify_crops(crops_dirs: Path, classify_dirs: Path):
         print(prediction)
         
         # Link an entry in the species directory to the cropped image.
-        species_dir = Path(classify_dirs, prediction["species"])
-        species_dir.mkdir(parents=True, exist_ok=True)
-        Path(species_dir, prediction["file_name"].name).hardlink_to(prediction["file_name"])
+        link_path = Path(classify_dirs, prediction["species"], prediction["file_name"].name)
+        link_path.parent.mkdir(parents=True, exist_ok=True)
+        link_path.hardlink_to(prediction["file_name"])
 
 
 if __name__ == "__main__":
