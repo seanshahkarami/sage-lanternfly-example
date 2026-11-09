@@ -7,7 +7,8 @@ inputs="$PWD/inputs"
 outputs="$PWD/runs/$(date -u +%s)"
 mkdir -p "${outputs}"
 
-# 1. Create candidate crops using YOLO.
+# 1. Create candidate crops using YOLOE. We're using an open vocabulary YOLO model because
+# stock YOLO doesn't include classes like bug or insect.
 yolo predict \
     model=yoloe-26x-seg.pt \
     conf=0.05 \
